@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    font-family: "Quicksand";
+    background-color: #f874c6;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+    background-color: #FBD8FF;
+}
+header h1 {
+    background-color: #FBD8FF;
+    color: #9B68BD;
+}
+header img {
+    margin-left: auto;
+    background-color: #FBD8FF;
+}
+.header-class {
+    background-color: #FBD8FF;
+}
+.sub-title {
+    font-size: 1.25rem;
+    font-weight: normal;
+    background-color: #FBD8FF;
+}
+
+/* Main content */
+.content {
+    align-items: center;
+}
+
+/* Input form */
+.input-form input {
+    width: 350px;
+    height: 25px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1px solid #fff;
+    display: flex;
+    margin: 50px auto 25px auto;
+}
+.feedback {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.feedback h3 {
+    height: 25px;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+    display: inline;
+}
+.alert-success {
+    background-color: #d4edda;
+}
+.alert-danger {
+    background-color: #f8d7da;
+}
+
+/* City status */
+.big-card {
+    text-align: left;
+    display: flex;
+    margin: 20px auto;
+    justify-content: center;
+}
+.big-card div h1,
+.big-card-subtitle,
+.big-card-description {
+    color: #f874c6;
+    background-color: #fff;
+}
+.big-card div h1 {
+    background-color: #fff;
+    padding: 10px 30px;
+    border-radius: 15px;
+    margin: 25px 0;
+    width: 500px;
+    font-size: 5rem;
+    display: inline-block;
+}
+.big-card-subtitle {
+    font-size: 2rem;
+    display: inline-block;
+}
+.big-card-description {
+    font-size: 1.25rem;
+    font-weight: normal;
+    display: inline-block;
+}
+
+/* Main-content */
+.main-content {
+    margin: 0 60px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+/* Grid */
+.grid-container {
+    /* margin: 0 100px; */
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #fff;
+    padding: 50px 50px 30px 50px;
+    border-radius: 10px;
+}
+.grid-item {
+    background-color: #87ceeb;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 5px;
+    display: flex;
+}
+.grid-item-description {
+    font-size: 1.5rem;
+    background-color: #87ceeb;
+    color: #fff;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.container {
+    margin: 0;
+    padding: 20px 50px;
+    background-color: #fff;
+}
+.container canvas{
+    background-color: #fff;
+}
+.legend-details {
+    padding: 20px 80px 50px 80px;
+    background-color: #fff;
+    margin-bottom: 70px;
+    border-radius: 0 0 10px 10px;
+}
+.legend-details h3, p{
+    background-color: #fff;
+}

@@ -1,0 +1,64 @@
+.element {
+	height: 100px;
+	width: 100px;
+	margin: 10px;
+}
+.white {fill:#FFFFFF}
+.gray {fill:#E0E0E0}
+.yellow {fill:#FFEB3B}
+
+.icon {
+    position: relative;
+    display: inline-block;
+    width: 12em;
+    height: 10em;
+    font-size: 1em;
+}
+.sun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    margin: -1.25em;
+    background: #FFEB3B;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0.375em #FFEB3B;
+    animation: spin 5s infinite linear;    
+  }
+  .rays {
+    position: absolute;
+    top: -2em;
+    left: 50%;
+    display: block;
+    width: 0.375em;
+    height: 1.125em;
+    margin-left: -0.1875em;
+    background: #FFEB3B;
+    border-radius: 0.25em;
+    box-shadow: 0 5.375em #FFEB3B;
+  }
+  .rays:before,
+  .rays:after {
+    content: '';
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    display: block;
+    width: 0.375em;
+    height: 1.125em;
+    transform: rotate(60deg);
+    transform-origin: 50% 3.25em;
+    background: #FFEB3B;
+    border-radius: 0.25em;
+    box-shadow: 0 5.375em #FFEB3B;
+  }
+  .rays:before {
+    transform: rotate(120deg);
+  }
+
+  
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+  }  

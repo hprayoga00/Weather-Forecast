@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+
+    <!-- Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/weather.css">
+
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-class">
+        <header>
+            <h1>
+                Weather Forecast Throughout The World
+                <span class="sub-title">Look what is happening to the World</span>
+            </h1>
+            <img height="100" width="auto" src="http://www.pngall.com/wp-content/uploads/2017/01/Weather-Report-PNG-Clipart.png">
+        </header>
+    </div>
+
+    <!-- Input Form -->
+    <div class="content">
+        <form method="post">
+            <div class="input-form">
+                <input type="text" name="city" placeholder="City Name: (ex: Surabaya, Jakarta)">
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					{% set message_class = 'alert-success' %}	
+					{% if category == 'error' %}
+						{% set message_class = 'alert-danger' %}
+					{% endif %}
+                    <div class="feedback">
+                        <h3 class="{{ message_class }}">{{ message }}</h3>
+                    </div>
+				{% endfor %}
+			{% endif %}
+			{% endwith %}
+        </form>
+    </div>
+
+    <!-- Result -->
+    {% if currentWeather %}
+        <div class="big-card">
+            <div>
+                <h1>
+                    {{ currentWeather.temperatureCelcius }}° C
+                    <span class="big-card-subtitle">
+                        {{ currentWeather.city }}<br>
+                        {{ currentWeather.currentTime }}
+                    </span>
+                    <span class="big-card-description">
+                        Description: {{ currentWeather.description }}<br>
+                        Wind Speed: {{ currentWeather.windSpeed }}<br>
+                        Humidity: {{ currentWeather.humidity }}<br>
+                        Pressure: {{ currentWeather.pressure }}<br>
+                    </span>
+                </h1>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="grid-container">
+                {% for weather in weather_data %}
+                    <div class="grid-item">
+                        {% if weather.description == 'overcast clouds' or weather.description == 'broken clouds' or weather.description == 'scattered clouds' %}
+                            <div class="weatherIcon">
+                                <div class="cloudy">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% elif weather.description == 'light rain' or weather.description == 'moderate rain' or weather.description == 'rain' or weather.description == 'shower rain' %}
+                            <div class="weatherIcon">
+                                <div class="flurries">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% elif weather.description == 'clear sky' %}
+                            <div class="weatherIcon">
+                                <div class="sunny">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% elif weather.description == 'few clouds' %}
+                            <div class="weatherIcon">
+                                <div class="mostlysunny">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% elif weather.description == 'thunderstorm' %}
+                            <div class="weatherIcon">
+                                <div class="tstorms">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% elif weather.description == 'snow' %}
+                            <div class="weatherIcon">
+                                <div class="snow">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% elif weather.description == 'mist' %}
+                            <div class="weatherIcon">
+                                <div class="fog">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="weatherIcon">
+                                <div class="sunny">
+                                    <div class="inner"></div>
+                                </div>
+                            </div>
+                        {% endif %}
+        
+                        <div class="grid-item-description">
+                            {{ weather.temperatureCelcius }}° C<br>
+                            {{ weather.temperatureFarenheit }}° F<br>
+                            {{ weather.timeHour }} {{ weather.timeDate }}<br>
+                            {{ weather.description }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+    
+            {% if graphTempCelcius %}
+                <!-- Graph -->
+                <div class="chart-container">
+                    <div class="container">
+                        <canvas id="myChart"></canvas>
+                    </div>
+            
+                    <div class="legend-details">
+                        <h3>Explanation</h3>
+                        <p>In the diagram above provides information about a temperature at a certain place which is the unit temperature Celsius and Fahrenheit. can also provide humidity information, providing information can see for every 3 hours in 1 day.</p>
+                        <h3>Celsius</h3>
+                        <p>in a normal room temperature of 20-25 celsius. It is recommended to feel a human comfort at a temperature of 20 Celsius, no more or less. whereas if the temperature is below 20 ceclcius, it will feel cold, whereas if it is above 20 celsius, it will feel heat.</p>
+                        <h3>Fahrenheit</h3>
+                        <p>In a normal temperature room 68-77 Fahrenheit. It is recommended to feel a human comfort at a temperature of 68 Fahrenheit no more or less. whereas if the temperature is below 68 Fahrenheit, it will feel a cold, whereas if it is above 68 Fahrenheit, it will feel the heat.</p>
+                        <h3>Humidity</h3>
+                        <p>	Normal humidity for a room range of 45% -65%, if a humidity reaches 65% then viruses, fungi, mildew, and bacteria then the virus will quickly multiply with a high humidity place, if a humidity reaches 45% then the skin, throat, dry and itchy eyes. and also places that have low humidity levels are able to provide influenza viruses to survive longer</p>
+                    </div>
+                </div>
+                <!-- Graph script -->
+                <script>
+                    var ctx = document.getElementById("myChart").getContext("2d");
+                    var chart = new Chart(ctx, {
+                        type: "line",
+                        data: {
+                            labels: {{ graphTime | safe }},
+                            datasets: [
+                                {
+                                    label: "Celcius (°C)",
+                                    data: {{ graphTempCelcius | safe }},
+                                    borderWidth: 2,
+                                    backgroundColor: "rgba(6, 167, 125, 0.1)",
+                                    borderColor: "rgba(6, 167, 125, 1)",
+                                    pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                                    pointBorderColor: "rgba(6, 167, 125, 1)",
+                                    pointHoverBackgroundColor: "rgba(6, 167, 125, 1)",
+                                    pointHoverBorderColor: "#fff"
+                                },
+                                {
+                                    label: "Farenheit (°F)",
+                                    data: {{ graphTempFarenheit | safe }},
+                                    borderWidth: 2,
+                                    backgroundColor: "rgba(45, 14, 179, 0.1)",
+                                    borderColor: "rgba(45, 14, 179, 1)",
+                                    pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                                    pointBorderColor: "rrgba(45, 14, 179, 1)",
+                                    pointHoverBackgroundColor: "rgba(45, 14, 179, 1)",
+                                    pointHoverBorderColor: "#fff"
+                                },
+                                {
+                                    label: "Humidity (%)",
+                                    data: {{ graphHumidity | safe }},
+                                    borderWidth: 2,
+                                    backgroundColor: "rgba(26, 143, 227, 0.1)",
+                                    borderColor: "rgba(26, 143, 227, 1)",
+                                    pointBackgroundColor: "rgba(225, 225, 225, 1)",
+                                    pointBorderColor: "rgba(26, 143, 227, 1)",
+                                    pointHoverBackgroundColor: "rgba(26, 143, 227, 1)",
+                                    pointHoverBorderColor: "#fff"	
+                                }
+                            ]
+                        }
+                    });
+                    chart.render();
+                    
+                </script>
+            {% endif %}
+        </div>
+
+    {% endif %}
+</body>
+</html>
